@@ -1,12 +1,12 @@
 package pucrs.alpro2.br.tf;
 
+import pucrs.alpro2.br.listTAD.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.LinkedList;
 
 public class Arquivo {
 	private Path path1 = Paths.get("C:/Users/Tiago/Documents/acidentes.csv");

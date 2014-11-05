@@ -1,6 +1,8 @@
 package pucrs.alpro2.br.listTAD;
 
-public class LinkedList<E> implements ListTAD<E> {
+import java.util.Iterator;
+
+public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 
 	private Node<E> head;
 	private Node<E> tail;
@@ -226,6 +228,12 @@ public class LinkedList<E> implements ListTAD<E> {
 		sb.append("]");
 
 		return sb.toString();
+	}
+
+	@Override
+	public Iterator<E> iterator() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

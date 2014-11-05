@@ -1,13 +1,13 @@
 package pucrs.alpro2.br.tf;
 
-import java.util.LinkedList;
+import pucrs.alpro2.br.listTAD.*;
 
 public class acidentesApp {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		LinkedList<Acidentes> lista = null;
+		LinkedList<Acidentes> lista;
 		Arquivo arq = new Arquivo();
 		lista = arq.lerArquivo();
 		
