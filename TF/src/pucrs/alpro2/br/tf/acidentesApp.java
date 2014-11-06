@@ -7,11 +7,11 @@ public class acidentesApp {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		LinkedList<Acidentes> lista;
+		LinkedList<Acidente> lista;
 		Arquivo arq = new Arquivo();
 		lista = arq.lerArquivo();
 		
-		for(Acidentes l : lista){
+		for(Acidente l : lista){
 			System.out.println(l.getDiaSem());
 		}
 		

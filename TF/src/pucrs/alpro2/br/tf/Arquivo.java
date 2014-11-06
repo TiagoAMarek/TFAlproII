@@ -10,9 +10,9 @@ import java.nio.file.Paths;
 
 public class Arquivo {
 	private Path path1 = Paths.get("C:/Users/Tiago/Documents/acidentes.csv");
-	private LinkedList<Acidentes> lista = new LinkedList<Acidentes>();
+	private LinkedList<Acidente> lista = new LinkedList<Acidente>();
 
-	public LinkedList<Acidentes> lerArquivo() {
+	public LinkedList<Acidente> lerArquivo() {
 		try (BufferedReader reader = Files.newBufferedReader(path1,
 				Charset.defaultCharset())) {
 			String line = null;
@@ -21,7 +21,7 @@ public class Arquivo {
 			while ((line = reader.readLine()) != null) {
 				if(i != 0){
 					splittedLine = line.split(";");
-					Acidentes acid = new Acidentes(splittedLine[0],
+					Acidente acid = new Acidente(splittedLine[0],
 							splittedLine[1], splittedLine[2], splittedLine[3],
 							Integer.parseInt(splittedLine[4]), Integer.parseInt(splittedLine[5]), Integer.parseInt(splittedLine[6]),
 							Integer.parseInt(splittedLine[7]), Integer.parseInt(splittedLine[8]), Integer.parseInt(splittedLine[9]),

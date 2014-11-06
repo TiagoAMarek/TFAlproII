@@ -1,6 +1,6 @@
 package pucrs.alpro2.br.tf;
 
-public class Acidentes {
+public class Acidente {
 	private String local;
 	private String tipoAcid;
 	private String dataHora;
@@ -21,7 +21,7 @@ public class Acidentes {
 	private String noiteDia;
 	private String regiao;
 	
-	public Acidentes(String local, String tipoAcid, String dataHora,
+	public Acidente(String local, String tipoAcid, String dataHora,
 			String diaSem, int feridos, int mortes, int mortesPost, int fatais,
 			int auto, int taxi, int lotacao, int onibusUrb, int onibusInt,
 			int caminhao, int carroca, int bicicleta, String tempo,
