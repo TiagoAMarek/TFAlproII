@@ -11,10 +11,11 @@ public class acidentesApp {
 		Arquivo arq = new Arquivo();
 		lista = arq.lerArquivo();
 		
-		for(Acidente l : lista){
+	/*	
+	 	for(Acidente l : lista){
 			System.out.println(l.getDiaSem());
 		}
-		
+	*/	
 		
 	}
 

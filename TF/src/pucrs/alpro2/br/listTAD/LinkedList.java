@@ -2,7 +2,7 @@ package pucrs.alpro2.br.listTAD;
 
 import java.util.Iterator;
 
-public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
+public class LinkedList<E> implements ListTAD<E> {
 
 	private Node<E> head;
 	private Node<E> tail;
@@ -10,17 +10,13 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 
 	private class Node<E> {
 		public E element;
-		public Node<E> prevDate;
-		public Node<E> nextDate;
-		public Node<E> prevStreet;
-		public Node<E> nextStreet;
+		public Node<E> prev;
+		public Node<E> next;
 
 		public Node(E e) {
 			element = e;
-			prevDate = null;
-			nextDate = null;
-			prevStreet = null;
-			nextStreet = null;
+			prev = null;
+			next = null;
 		}
 	}
 
@@ -38,10 +34,10 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 			head = newNode;
 		}else{
 			// lista com ao menos um elemento
-			newNode.nextDate = head;
-			head.prevDate = newNode;
-			tail.nextDate = newNode;
-			newNode.prevDate = tail;
+			newNode.next = head;
+			head.prev = newNode;
+			tail.next = newNode;
+			newNode.prev = tail;
 		}
 		tail = newNode;
 		count++;
@@ -62,12 +58,12 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 			int i = 1;
 			while (i <= index){
 				if(i == index){
-					aux.prevDate.nextDate = newNode;
-					aux.prevDate = newNode;
-					newNode.nextDate = aux;
-					newNode.prevDate = aux.prevDate;
+					aux.prev.next = newNode;
+					aux.prev = newNode;
+					newNode.next = aux;
+					newNode.prev = aux.prev;
 				}
-				aux = aux.nextDate;
+				aux = aux.next;
 				i++;
 			}
 		}
@@ -88,7 +84,7 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 			if(i == index){
 				return aux.element;
 			}
-			aux = aux.nextDate;
+			aux = aux.next;
 			i++;
 		}
 		return null;
@@ -114,7 +110,7 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 			if(i == index){
 				aux.element = element;
 			}
-			aux = aux.nextDate;
+			aux = aux.next;
 			i++;
 		}
 	}
@@ -133,16 +129,16 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 		
 		Node<E> aux = head;
 				
-		while(aux.nextDate != null){
-			if(aux.nextDate.element.equals(e)){
-				if(aux.nextDate.nextDate == null){
-					aux.nextDate = null;
+		while(aux.next != null){
+			if(aux.next.element.equals(e)){
+				if(aux.next.next == null){
+					aux.next = null;
 				} else {
-					aux.nextDate = aux.nextDate.nextDate;
+					aux.next = aux.next.next;
 				}
 				count--;
 			} else {
-				aux = aux.nextDate;
+				aux = aux.next;
 			}
 		}
 		return true;
@@ -161,15 +157,15 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 		while(aux != null){
 			if(i == index){
 				if(aux == tail){
-					tail = aux.prevDate;
+					tail = aux.prev;
 				}
-				aux.prevDate.nextDate = aux.nextDate;
-				aux.nextDate.prevDate = aux.prevDate;
+				aux.prev.next = aux.next;
+				aux.next.prev = aux.prev;
 				count--;
 				return aux.element;
 			}
 			i++;
-			aux = aux.nextDate;
+			aux = aux.next;
 		}
 		
 		return null;
@@ -198,7 +194,7 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 			if(aux.element.equals(e)){
 				return true;
 			}
-			aux = aux.nextDate;
+			aux = aux.next;
 		}
 		return false;
 	}
@@ -222,18 +218,12 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 
 		for (int i = 0; i < count - 1; i++) {
 			sb.append(n.element.toString() + ",");
-			n = n.nextDate;
+			n = n.next;
 		}
 		sb.append(n.element.toString());
 		sb.append("]");
 
 		return sb.toString();
-	}
-
-	@Override
-	public Iterator<E> iterator() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
