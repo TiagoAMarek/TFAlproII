@@ -1,6 +1,7 @@
 package pucrs.alpro2.br.tf;
 
 import pucrs.alpro2.br.listTAD.*;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -10,7 +11,7 @@ import java.nio.file.Paths;
 
 public class Arquivo {
 	private Path path1 = Paths.get("C:/Users/Tiago/Documents/acidentes.csv");
-	private LinkedList<Acidente> lista = new LinkedList<Acidente>();
+	private ListaAcidentes acidentes = new ListaAcidentes();
 
 	public LinkedList<Acidente> lerArquivo() {
 		try (BufferedReader reader = Files.newBufferedReader(path1,
