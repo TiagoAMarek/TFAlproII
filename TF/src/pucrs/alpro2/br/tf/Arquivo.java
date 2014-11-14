@@ -12,6 +12,31 @@ import java.nio.file.Paths;
 public class Arquivo {
 	private Path path1 = Paths.get("C:/Users/Tiago/Documents/acidentes.csv");
 	private ListaAcidentes acidentes = new ListaAcidentes();
+	
+	public String dateFormat(String date){
+			String formatted = "";
+			String year = "";
+			String month = "";
+			String day = "";
+			String hour = "";
+			char[] n = date.toCharArray();
+			for(int i = 0; i < n.length; i++){
+				if(i <= 3){
+					year += n[i];
+				}
+				else if(i <= 5){
+					month += n[i];
+				}
+				else if(i <= 7){
+					day += n[i];
+				}
+				else if(i > 7){
+					hour += n[i];
+				}
+			}
+			formatted = day+"-"+month+"-"+year+" "+hour;
+			return formatted;
+	}
 
 	public LinkedList<Acidente> lerArquivo() {
 		try (BufferedReader reader = Files.newBufferedReader(path1,
@@ -22,8 +47,9 @@ public class Arquivo {
 			while ((line = reader.readLine()) != null) {
 				if(i != 0){
 					splittedLine = line.split(";");
+					String date = dateFormat(splittedLine[2]); 
 					Acidente acid = new Acidente(splittedLine[0],
-							splittedLine[1], splittedLine[2], splittedLine[3],
+							splittedLine[1], date, splittedLine[3],
 							Integer.parseInt(splittedLine[4]), Integer.parseInt(splittedLine[5]), Integer.parseInt(splittedLine[6]),
 							Integer.parseInt(splittedLine[7]), Integer.parseInt(splittedLine[8]), Integer.parseInt(splittedLine[9]),
 							Integer.parseInt(splittedLine[10]), Integer.parseInt(splittedLine[11]), Integer.parseInt(splittedLine[12]),

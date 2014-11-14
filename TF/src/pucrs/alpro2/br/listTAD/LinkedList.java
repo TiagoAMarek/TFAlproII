@@ -4,19 +4,26 @@ import java.util.Iterator;
 
 public class LinkedList<E> implements ListTAD<E> {
 
-	private Node<E> head;
-	private Node<E> tail;
+	private Node<E> headDate;
+	private Node<E> headStreet;
+	private Node<E> tailDate;
+	private Node<E> tailStreet;
+
 	private int count;
 
 	private class Node<E> {
 		public E element;
-		public Node<E> prev;
-		public Node<E> next;
+		public Node<E> prevDate;
+		public Node<E> prevStreet;
+		public Node<E> nextDate;
+		public Node<E> nextStreet;
 
 		public Node(E e) {
 			element = e;
-			prev = null;
-			next = null;
+			prevDate = null;
+			prevStreet = null;
+			nextDate = null;
+			nextStreet = null;
 		}
 	}
 
@@ -25,23 +32,37 @@ public class LinkedList<E> implements ListTAD<E> {
 		clear();
 	}
 
-	@Override
+  /*@Override
 	public void add(E e){
 		Node<E> newNode = new Node<>(e);
 
 		if(count == 0){
 			// lista vazia
-			head = newNode;
+			headDate = newNode;
 		}else{
 			// lista com ao menos um elemento
-			newNode.next = head;
-			head.prev = newNode;
-			tail.next = newNode;
-			newNode.prev = tail;
+			newNode.nextDate = headDate;
+			headDate.prevDate = newNode;
+			tailDate.nextDate = newNode;
+			newNode.prevDate = tailDate;
 		}
-		tail = newNode;
+		
+		tailDate = newNode;
+		
+		if(count == 0){
+			// lista vazia
+			headStreet = newNode;
+		}else{
+			// lista com ao menos um elemento
+			newNode.nextStreet = headStreet;
+			headStreet.prevStreet = newNode;
+			tailStreet.nextStreet = newNode;
+			newNode.prevStreet = tailStreet;
+		}
+		tailStreet = newNode;
+		
 		count++;
-	}
+	}*/
 
 	@Override
 	public void add(int index, E e) {
@@ -51,22 +72,41 @@ public class LinkedList<E> implements ListTAD<E> {
 		Node<E> newNode = new Node<>(e);
 		// LISTA VAZIA
 		if (index == 0) {
-			head = newNode;
+			headDate = newNode;
 		} else {
 		// LISTA COM MAIS DE UM ELEMENTO
-			Node<E> aux = head;
+			Node<E> aux = headDate;
 			int i = 1;
 			while (i <= index){
 				if(i == index){
-					aux.prev.next = newNode;
-					aux.prev = newNode;
-					newNode.next = aux;
-					newNode.prev = aux.prev;
+					aux.prevDate.nextDate = newNode;
+					aux.prevDate = newNode;
+					newNode.nextDate = aux;
+					newNode.prevDate = aux.prevDate;
 				}
-				aux = aux.next;
+				aux = aux.nextDate;
 				i++;
 			}
 		}
+		count++;
+	}
+	
+	@Override
+	public void add(E e){
+		Node<E> newNode = new Node<E>(e);
+		int i = 0;
+		if(count == 0){
+			headStreet = newNode;
+			headDate   = newNode;
+			tailStreet = newNode;
+			tailDate   = newNode;
+		}
+		else{
+			while(){
+				i++;
+			}
+		}
+		
 		count++;
 	}
 
@@ -77,14 +117,14 @@ public class LinkedList<E> implements ListTAD<E> {
 		if(index > count || index < 0)
 			throw new IndexOutOfBoundsException("Indice inexistente");
 		
-		Node<E> aux = head;
+		Node<E> aux = headDate;
 		int i = 0;
 		// PERCORRE A LISTA E RETORNA O ELEMENTO NO INDICE PASSADO
 		while(aux != null){
 			if(i == index){
 				return aux.element;
 			}
-			aux = aux.next;
+			aux = aux.nextDate;
 			i++;
 		}
 		return null;
@@ -103,14 +143,14 @@ public class LinkedList<E> implements ListTAD<E> {
 		if(index > count || index < 0)
 			throw new IndexOutOfBoundsException("Indice inexistente");
 		
-		Node<E> aux = head;
+		Node<E> aux = headDate;
 		int i = 0;
 		// PERCORRE A LISTA E SETA O ELEMENTO NO INDICE PASSADO
 		while(aux != null){
 			if(i == index){
 				aux.element = element;
 			}
-			aux = aux.next;
+			aux = aux.nextDate;
 			i++;
 		}
 	}
@@ -122,23 +162,23 @@ public class LinkedList<E> implements ListTAD<E> {
 		if(!contains(e))
 			return false;
 		if(count == 1){
-			head = null;
+			headDate = null;
 			count--;
 			return true;
 		}
 		
-		Node<E> aux = head;
+		Node<E> aux = headDate;
 				
-		while(aux.next != null){
-			if(aux.next.element.equals(e)){
-				if(aux.next.next == null){
-					aux.next = null;
+		while(aux.nextDate != null){
+			if(aux.nextDate.element.equals(e)){
+				if(aux.nextDate.nextDate == null){
+					aux.nextDate = null;
 				} else {
-					aux.next = aux.next.next;
+					aux.nextDate = aux.nextDate.nextDate;
 				}
 				count--;
 			} else {
-				aux = aux.next;
+				aux = aux.nextDate;
 			}
 		}
 		return true;
@@ -150,22 +190,22 @@ public class LinkedList<E> implements ListTAD<E> {
 			throw new IndexOutOfBoundsException("Lista vazia!");
 		if(index > count || index < 0)
 			throw new IndexOutOfBoundsException("Indice inexistente");
-		Node<E> aux = head;
+		Node<E> aux = headDate;
 		
 		// REMOVE O APONTAMENTO DO NODO ANTERIOR E DO PROXIMO PARA O NODO AUXILIAR NO INDICE INDICADO
 		int i = 1;
 		while(aux != null){
 			if(i == index){
-				if(aux == tail){
-					tail = aux.prev;
+				if(aux == tailDate){
+					tailDate = aux.prevDate;
 				}
-				aux.prev.next = aux.next;
-				aux.next.prev = aux.prev;
+				aux.prevDate.nextDate = aux.nextDate;
+				aux.nextDate.prevDate = aux.prevDate;
 				count--;
 				return aux.element;
 			}
 			i++;
-			aux = aux.next;
+			aux = aux.nextDate;
 		}
 		
 		return null;
@@ -188,21 +228,21 @@ public class LinkedList<E> implements ListTAD<E> {
 		if(isEmpty())
 			throw new IndexOutOfBoundsException("Lista vazia!");
 				
-		Node<E> aux = head;
+		Node<E> aux = headDate;
 		// VARRE A LISTA EM BUSCA DO ELEMENTO PASSADO RETORNA TRUE SE ENCONTRADO SENÃO FALSE
 		while(aux != null){
 			if(aux.element.equals(e)){
 				return true;
 			}
-			aux = aux.next;
+			aux = aux.nextDate;
 		}
 		return false;
 	}
 
 	@Override
 	public void clear() {
-		head = null;
-		tail = null;
+		headDate = null;
+		tailDate = null;
 		count = 0;
 	}
 
@@ -211,14 +251,14 @@ public class LinkedList<E> implements ListTAD<E> {
 		if (count == 0)
 			return "[]";
 
-		Node<E> n = head;
+		Node<E> n = headDate;
 
 		StringBuffer sb = new StringBuffer();
 		sb.append("[");
 
 		for (int i = 0; i < count - 1; i++) {
 			sb.append(n.element.toString() + ",");
-			n = n.next;
+			n = n.nextDate;
 		}
 		sb.append(n.element.toString());
 		sb.append("]");
