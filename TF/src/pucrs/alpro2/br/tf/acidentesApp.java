@@ -1,22 +1,18 @@
 package pucrs.alpro2.br.tf;
 
-import pucrs.alpro2.br.listTAD.*;
+import java.text.ParseException;
 
 public class acidentesApp {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
-		ListaAcidentes acidentes = new ListaAcidentes(); 
+		LinkedList<Acidente> acidentes = new LinkedList<Acidente>();
 		Arquivo arq = new Arquivo();
-		lista = arq.lerArquivo();
-		
-	/*	
-	 	for(Acidente l : lista){
-			System.out.println(l.getDiaSem());
-		}
-	*/	
-		
+		try {
+			acidentes = arq.lerArquivo();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
-
 }

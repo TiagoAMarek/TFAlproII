@@ -1,7 +1,6 @@
-package pucrs.alpro2.br.listTAD;
+package pucrs.alpro2.br.tf;
 
-import java.util.Iterator;
-
+@SuppressWarnings("hiding")
 public class LinkedList<E> implements ListTAD<E> {
 
 	private Node<E> headDate;
@@ -32,7 +31,7 @@ public class LinkedList<E> implements ListTAD<E> {
 		clear();
 	}
 
-  /*@Override
+  @Override
 	public void add(E e){
 		Node<E> newNode = new Node<>(e);
 
@@ -62,53 +61,52 @@ public class LinkedList<E> implements ListTAD<E> {
 		tailStreet = newNode;
 		
 		count++;
-	}*/
+	}
 
 	@Override
-	public void add(int index, E e) {
-		if (index < 0 || index > count)
+	public void add(int indexDate, int indexStreet, E e) {
+		if (indexDate < 0 || indexDate > count)
 			throw new IndexOutOfBoundsException("Indice invalido");
-
+		if (indexStreet < 0 || indexStreet > count)
+			throw new IndexOutOfBoundsException("Indice invalido");
+		
 		Node<E> newNode = new Node<>(e);
 		// LISTA VAZIA
-		if (index == 0) {
-			headDate = newNode;
+		if (indexDate == 0 && indexStreet == 0) {
+			headStreet = newNode;
+			headDate   = newNode;
+			tailStreet = newNode;
+			tailDate   = newNode;
 		} else {
 		// LISTA COM MAIS DE UM ELEMENTO
-			Node<E> aux = headDate;
-			int i = 1;
-			while (i <= index){
-				if(i == index){
-					aux.prevDate.nextDate = newNode;
-					aux.prevDate = newNode;
-					newNode.nextDate = aux;
-					newNode.prevDate = aux.prevDate;
+			Node<E> auxDate = headDate;
+			Node<E> auxStreet = headStreet;
+			int i = 1,
+				j = 1;
+			while (i <= indexDate){
+				if(i == indexDate){
+					auxDate.prevDate.nextDate = newNode;
+					auxDate.prevDate = newNode;
+					newNode.nextDate = auxDate;
+					newNode.prevDate = auxDate.prevDate;
 				}
-				aux = aux.nextDate;
+				auxDate = auxDate.nextDate;
 				i++;
+			}
+			while (j <= indexStreet){
+				if(j == indexStreet){
+					auxStreet.prevStreet.nextStreet = newNode;
+					auxDate.prevStreet = newNode;
+					newNode.nextStreet = auxStreet;
+					newNode.prevStreet = auxStreet.prevStreet;
+				}
+				auxStreet = auxStreet.nextStreet;
+				j++;
 			}
 		}
 		count++;
 	}
 	
-	@Override
-	public void add(E e){
-		Node<E> newNode = new Node<E>(e);
-		int i = 0;
-		if(count == 0){
-			headStreet = newNode;
-			headDate   = newNode;
-			tailStreet = newNode;
-			tailDate   = newNode;
-		}
-		else{
-			while(){
-				i++;
-			}
-		}
-		
-		count++;
-	}
 
 	@Override
 	public E get(int index) {

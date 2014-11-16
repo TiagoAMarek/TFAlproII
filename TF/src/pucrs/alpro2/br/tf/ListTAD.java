@@ -1,9 +1,9 @@
-package pucrs.alpro2.br.listTAD;
+package pucrs.alpro2.br.tf;
 
 public interface ListTAD<E> {
 	void add(E e); // insere e no final
 
-	void add(int index, E element); // insere e em determinada posição (index)
+	void add(int indexDate, int indexStreet, E element); // insere e em determinada posição (index)
 
 	E get(int index); // obtém elemento na posição index
 

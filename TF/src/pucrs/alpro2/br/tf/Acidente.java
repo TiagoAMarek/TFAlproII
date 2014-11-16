@@ -1,9 +1,11 @@
 package pucrs.alpro2.br.tf;
 
+import java.util.Date;
+
 public class Acidente {
 	private String local;
 	private String tipoAcid;
-	private String dataHora;
+	private Date dataHora;
 	private String diaSem;
 	private int feridos;
 	private int mortes;
@@ -21,7 +23,7 @@ public class Acidente {
 	private String noiteDia;
 	private String regiao;
 	
-	public Acidente(String local, String tipoAcid, String dataHora,
+	public Acidente(String local, String tipoAcid, Date dataHora,
 			String diaSem, int feridos, int mortes, int mortesPost, int fatais,
 			int auto, int taxi, int lotacao, int onibusUrb, int onibusInt,
 			int caminhao, int carroca, int bicicleta, String tempo,
@@ -64,11 +66,11 @@ public class Acidente {
 		this.tipoAcid = tipoAcid;
 	}
 
-	public String getDataHora() {
+	public Date getDataHora() {
 		return dataHora;
 	}
 
-	public void setDataHora(String dataHora) {
+	public void setDataHora(Date dataHora) {
 		this.dataHora = dataHora;
 	}
 
