@@ -57,6 +57,8 @@ public class Arquivo {
 							Integer.parseInt(splittedLine[10]), Integer.parseInt(splittedLine[11]), Integer.parseInt(splittedLine[12]),
 							Integer.parseInt(splittedLine[13]), Integer.parseInt(splittedLine[14]), Integer.parseInt(splittedLine[15]),
 							splittedLine[16], splittedLine[17], splittedLine[18]);
+							
+					
 					acidentes.add(acid);
 				}
 				i = 1;

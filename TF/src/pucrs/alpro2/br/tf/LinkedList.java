@@ -1,7 +1,9 @@
 package pucrs.alpro2.br.tf;
 
+import java.util.Iterator;
+
 @SuppressWarnings("hiding")
-public class LinkedList<E> implements ListTAD<E> {
+public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 
 	private Node<E> headDate;
 	private Node<E> headStreet;
@@ -25,6 +27,43 @@ public class LinkedList<E> implements ListTAD<E> {
 			nextStreet = null;
 		}
 	}
+	
+    public class LinkedListIterator implements Iterator<E> {
+    	 
+        private Node<E> correnteDate = headDate.nextDate;
+        private Node<E> correnteStreet = headStreet.nextStreet;
+
+ 
+        @Override
+        public boolean hasNext() {
+            return correnteDate != tailDate;
+        }
+        
+        public boolean hasNextStreet() {
+            return correnteStreet != tailStreet;
+        }
+        
+        @Override
+        public E next() {
+        	E valor = null;
+        	valor = correnteDate.element;
+            correnteDate = correnteDate.nextDate;
+            return valor;
+        }
+        
+        public E nextStreet() {
+        	E valor = null;
+        	valor = correnteStreet.element;
+        	correnteStreet = correnteStreet.nextStreet;
+            return valor;
+        }
+ 
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+ 
+    }
 
 	// Construtor
 	public LinkedList(){
@@ -262,6 +301,12 @@ public class LinkedList<E> implements ListTAD<E> {
 		sb.append("]");
 
 		return sb.toString();
+	}
+
+	@Override
+	public Iterator<E> iterator() {
+		// TODO Auto-generated method stub
+		return new LinkedListIterator();
 	}
 
 }
