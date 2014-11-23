@@ -14,14 +14,20 @@ import java.util.Set;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-public class Arquivo {
+/**
+ * 
+ * @authors Tiago A. Marek, Joao Garcia
+ *
+ */
+
+public class ListaAcidentes {
 	private Path path1 = Paths.get("C:/Users/Tiago/Documents/acidentes.csv");
 	private LinkedList<Acidente> acidentes = new LinkedList<Acidente>();
 	private Map<Date, Acidente> dictDate = new TreeMap<Date, Acidente>();
 	private Map<String, Acidente> dictStreet = new TreeMap<String, Acidente>();
 
 	
-	// FORMATAÇÃO DA DATA PARA O FORMATO "dd-MM-yyyy hh:ss"
+	// FORMATACAO DA DATA PARA O FORMATO "dd-MM-yyyy hh:ss"
 	public String dateFormat(String date){
 			String formatted = "";
 			String year = "";
@@ -49,10 +55,10 @@ public class Arquivo {
 	}
 	
 
-	public LinkedList<Acidente> lerArquivo() throws ParseException {
+	public LinkedList<Acidente> createList() throws ParseException {
 		try (BufferedReader reader = Files.newBufferedReader(path1,
 				Charset.defaultCharset())) {
-			// INICIALIZAÇÃO DE OBJETOS, LISTAS E VARIÁVEIS NECESSÁRIAS
+			// INICIALIZACAO DE OBJETOS, LISTAS E VARIAVEIS NECESSARIAS
 			int i                 = 0;
 			String line           = "", 
 				   local          = "", 
@@ -62,7 +68,7 @@ public class Arquivo {
 			SimpleDateFormat sdf  = new SimpleDateFormat("dd-MM-yyyy hh:ss");
 			Date date             = null;
 			
-			// LÊ AS LINHAS DO ARQUIVO E INSERE NOS DICIONÁRIOS
+			// LE AS LINHAS DO ARQUIVO E INSERE NOS DICIONARIOS
 			while ((line = reader.readLine()) != null) {
 				if(i != 0){
 					// QUEBRA A LINHA POR ";"
@@ -73,7 +79,7 @@ public class Arquivo {
 						tipoLocal = aux[0];
 						local = aux[1];
 						
-						// CONSTRÓI O OBJETO acid
+						// CONSTROI O OBJETO acid
 						Acidente acid = new Acidente(local,
 								splittedLine[1], date, splittedLine[3],
 								Integer.parseInt(splittedLine[4]), Integer.parseInt(splittedLine[5]), Integer.parseInt(splittedLine[6]),
@@ -82,13 +88,13 @@ public class Arquivo {
 								Integer.parseInt(splittedLine[13]), Integer.parseInt(splittedLine[14]), Integer.parseInt(splittedLine[15]),
 								splittedLine[16], splittedLine[17], splittedLine[18], tipoLocal);
 						
-						// DICIONÁRIO POR DATA
+						// DICIONARIO POR DATA
 						dictDate.put(date, acid);
-						// DICIONÁRIO POR RUA
+						// DICIONARIO POR RUA
 						dictStreet.put(local, acid);
 						
 					}catch(Exception e){
-						// EXCEPTION
+						System.err.println("Erro ao executar linha "+ i +" do arquivo");
 					}
 					
 					/*System.out.println(splittedLine[0]+ " " +
@@ -99,7 +105,7 @@ public class Arquivo {
 					Integer.parseInt(splittedLine[13])+ " " +Integer.parseInt(splittedLine[14])+ " " +Integer.parseInt(splittedLine[15])+ " " +
 					splittedLine[16]+ " " +splittedLine[17]+ " " +splittedLine[18]);*/
 					}
-				i = 1;
+				i++;
 			}
 
 		} catch (IOException x) {
@@ -108,15 +114,22 @@ public class Arquivo {
 		
 		Set<Entry<Date, Acidente>> setDate = dictDate.entrySet();
 		Set<Entry<String, Acidente>> setStreet = dictStreet.entrySet();
+		
 		for (Map.Entry<Date, Acidente> acdDate : setDate) { 
-			acidentes.addDate(acdDate.getValue());
-			acidentes.incrementSize();
-		    //System.out.println(acdDate.getKey() + ": " + acdDate.getValue().getLocal()); 
+			try {
+				acidentes.addDate(acdDate.getValue());
+			} catch(Exception e) {
+				System.err.println("Erro ao inserir objeto do dicionario na lista data");
+			}
 		}
 		
-/*		for (Map.Entry<String, Acidente> acdStreet : setStreet) { 
-			acidentes.addStreet(acdStreet.getValue());
-		}*/
+		for (Map.Entry<String, Acidente> acdStreet : setStreet) { 
+			try {
+				acidentes.addStreet(acdStreet.getValue());
+			} catch(Exception e) {
+				System.err.println("Erro ao inserir objeto do dicionario na lista rua");
+			}
+		}
 		
 		return acidentes;
 	}

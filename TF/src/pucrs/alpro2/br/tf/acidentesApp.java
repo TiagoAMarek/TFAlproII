@@ -9,11 +9,11 @@ public class acidentesApp {
 	public static void main(String[] args) {
 		// INICIALIZAÇÃO DE OBJETOS, LISTAS E VARIÁVEIS NECESSÁRIAS
 		LinkedList<Acidente> acidentes = new LinkedList<Acidente>();
-		Arquivo arq = new Arquivo();
+		ListaAcidentes listAcd = new ListaAcidentes();
 
 		// TENTA LER O ARQUIVO E RETORNA LISTA COM REGITROS
 		try {
-			acidentes = arq.lerArquivo();
+			acidentes = listAcd.createList();
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -24,5 +24,12 @@ public class acidentesApp {
 			Acidente acidente = it.next();
 			System.out.println(acidente.getDataHora());
 		}
+		
+		// IMPRIMI A LISTA ORDENADA POR RUA
+		/*Iterator<Acidente> it = acidentes.iteratorStreet();
+		while(it.hasNext()) {
+			Acidente acidente = it.next();
+			System.out.println(acidente.getLocal());
+		}*/
 	}
 }

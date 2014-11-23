@@ -27,8 +27,8 @@ public class Testes {
 				date, "QUINTA-FEIRA", 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0,
 				"BOM", "DIA", "NORTE", "AV ");
 		
-		lista.add(0, 0, acidente1);
-		lista.add(1, 1, acidente2);
+		/*lista.add(0, 0, acidente1);
+		lista.add(1, 1, acidente2);*/
 		
 		System.out.println(lista.get(0).getLocal());
 		System.out.println(lista.getByStreet(1).getLocal());

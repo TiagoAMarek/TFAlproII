@@ -2,8 +2,13 @@ package pucrs.alpro2.br.tf;
 
 import java.util.Iterator;
 
+/**
+ * 
+ * @authors Tiago A. Marek, Joao Garcia
+ *
+ * @param <E>
+ */
 
-@SuppressWarnings("hiding")
 public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 
 	private Node<E> headDate;
@@ -11,8 +16,12 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 	private Node<E> tailDate;
 	private Node<E> tailStreet;
 
-	private int count;
+	private int countDate;
+	private int countStreet;
 
+
+	// CLASSE NODO
+	@SuppressWarnings("hiding")
 	private class Node<E> {
 		public E element;
 		public Node<E> prevDate;
@@ -29,6 +38,7 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 		}
 	}
 	
+	// CLASSE ITERADORA DE DATA
     public class LinkedListIteratorDate implements Iterator<E> {
     	 
         private Node<E> correnteDate = headDate.nextDate;
@@ -53,6 +63,7 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
  
     }
 
+    // CLASSE ITERADORA DE RUA
     public class LinkedListIteratorStreet implements Iterator<E> {
 
 	    private Node<E> correnteStreet = headStreet.nextStreet;
@@ -80,50 +91,11 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 		clear();
 	}
 
-  @Override
-	public void add(E e){
-		Node<E> newNode = new Node<>(e);
-		
-		if(count == 0){
-			// lista vazia
-			headDate   = newNode;
-			tailDate   = newNode;
-			
-			headDate.nextDate = newNode;
-			tailDate.prevDate = newNode;
-		}else{
-			// lista com ao menos um elemento
-			newNode.nextDate = headDate;
-			headDate.prevDate = newNode;
-			tailDate.nextDate = newNode;
-			newNode.prevDate = tailDate;
-		}
-		
-		tailDate = newNode;
-		
-		if(count == 0){
-			// lista vazia
-			headStreet = newNode;
-			tailStreet = newNode;
-			
-			headStreet.nextStreet = newNode;
-			tailStreet.prevStreet = newNode;
-		}else{
-			// lista com ao menos um elemento
-			newNode.nextStreet = headStreet;
-			headStreet.prevStreet = newNode;
-			tailStreet.nextStreet = newNode;
-			newNode.prevStreet = tailStreet;
-		}
-		tailStreet = newNode;
-		
-		count++;
-	}
-  
+	// ADICIONA NODO POR DATA
 	public void addDate(E e){
 		Node<E> newNode = new Node<>(e);
 		
-		if(count == 0){
+		if(countDate == 0){
 			// lista vazia
 			headDate   = newNode;
 			tailDate   = newNode;
@@ -139,12 +111,14 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 		}
 		
 		tailDate = newNode;
+		countDate++;
 	}
 	
+	// ADICIONA NODO POR RUA
 	public void addStreet(E e){
 		Node<E> newNode = new Node<>(e);
 		
-		if(count == 0){
+		if(countStreet == 0){
 			// lista vazia
 			headStreet = newNode;
 			tailStreet = newNode;
@@ -160,66 +134,14 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 		}
 		
 		tailStreet = newNode;
-	}
-
-	@Override
-	public void add(int indexDate, int indexStreet, E e) {
-		if (indexDate < 0 || indexDate > count)
-			throw new IndexOutOfBoundsException("Indice invalido");
-		if (indexStreet < 0 || indexStreet > count)
-			throw new IndexOutOfBoundsException("Indice invalido");
-		
-		Node<E> newNode = new Node<>(e);
-		// LISTA VAZIA
-		if (indexDate == 0 && indexStreet == 0) {
-			headDate   = newNode;
-			tailDate   = newNode;
-			
-			headDate.nextDate = newNode;
-			tailDate.prevDate = newNode;
-			
-			headStreet = newNode;
-			tailStreet = newNode;
-			
-			headStreet.nextStreet = newNode;
-			tailStreet.prevStreet = newNode;
-			
-		} else {
-		// LISTA COM MAIS DE UM ELEMENTO
-			Node<E> auxDate = headDate;
-			Node<E> auxStreet = headStreet;
-			int i = 1,
-				j = 1;
-			while (i <= indexDate){
-				if(i == indexDate){
-					auxDate.prevDate.nextDate = newNode;
-					auxDate.prevDate = newNode;
-					newNode.nextDate = auxDate;
-					newNode.prevDate = auxDate.prevDate;
-				}
-				auxDate = auxDate.nextDate;
-				i++;
-			}
-			while (j <= indexStreet){
-				if(j == indexStreet){
-					auxStreet.prevStreet.nextStreet = newNode;
-					auxDate.prevStreet = newNode;
-					newNode.nextStreet = auxStreet;
-					newNode.prevStreet = auxStreet.prevStreet;
-				}
-				auxStreet = auxStreet.nextStreet;
-				j++;
-			}
-		}
-		count++;
+		countStreet++;
 	}
 	
-
 	@Override
 	public E get(int index) {
 		if(isEmpty())
 			throw new IndexOutOfBoundsException("Lista vazia!");
-		if(index > count || index < 0)
+		if(index > countDate || index < 0)
 			throw new IndexOutOfBoundsException("Indice inexistente");
 		
 		Node<E> aux = headDate;
@@ -238,7 +160,7 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 	public E getByStreet(int index) {
 		if(isEmpty())
 			throw new IndexOutOfBoundsException("Lista vazia!");
-		if(index > count || index < 0)
+		if(index > countStreet || index < 0)
 			throw new IndexOutOfBoundsException("Indice inexistente");
 		
 		Node<E> aux = headStreet;
@@ -254,17 +176,12 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 		return null;
 	}
 
-	@Override
-	public int indexOf(E e) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	// SETA ELEMENTO NA POSICAO INDICADA POR DATA
 	@Override
 	public void set(int index, E element) {
 		if(isEmpty())
 			throw new IndexOutOfBoundsException("Lista vazia!");
-		if(index > count || index < 0)
+		if(index > countDate || index < 0)
 			throw new IndexOutOfBoundsException("Indice inexistente");
 		
 		Node<E> aux = headDate;
@@ -278,79 +195,53 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 			i++;
 		}
 	}
-
-	@Override
-	public boolean remove(E e) {
-		if(count == 0)
-			throw new IndexOutOfBoundsException("Lista vazia!");
-		if(!contains(e))
-			return false;
-		if(count == 1){
-			headDate = null;
-			count--;
-			return true;
-		}
-		
-		Node<E> aux = headDate;
-				
-		while(aux.nextDate != null){
-			if(aux.nextDate.element.equals(e)){
-				if(aux.nextDate.nextDate == null){
-					aux.nextDate = null;
-				} else {
-					aux.nextDate = aux.nextDate.nextDate;
-				}
-				count--;
-			} else {
-				aux = aux.nextDate;
-			}
-		}
-		return true;
-	}
-
-	@Override
-	public E remove(int index) {
+	
+	// SETA ELEMENTO NA POSICAO INDICADA POR RUA
+	public void setStreet(int index, E element) {
 		if(isEmpty())
 			throw new IndexOutOfBoundsException("Lista vazia!");
-		if(index > count || index < 0)
+		if(index > countStreet || index < 0)
 			throw new IndexOutOfBoundsException("Indice inexistente");
-		Node<E> aux = headDate;
 		
-		// REMOVE O APONTAMENTO DO NODO ANTERIOR E DO PROXIMO PARA O NODO AUXILIAR NO INDICE INDICADO
-		int i = 1;
+		Node<E> aux = headStreet;
+		int i = 0;
+		// PERCORRE A LISTA E SETA O ELEMENTO NO INDICE PASSADO
 		while(aux != null){
 			if(i == index){
-				if(aux == tailDate){
-					tailDate = aux.prevDate;
-				}
-				aux.prevDate.nextDate = aux.nextDate;
-				aux.nextDate.prevDate = aux.prevDate;
-				count--;
-				return aux.element;
+				aux.element = element;
 			}
+			aux = aux.nextStreet;
 			i++;
-			aux = aux.nextDate;
 		}
-		
-		return null;
 	}
 	
+	// RETORNAR SE LISTA DATA ESTA VAZIA
 	@Override
 	public boolean isEmpty() {
-		if(count == 0)
+		if(countDate == 0)
 			return true;
 		return false;
 	}
 
-	@Override
-	public int size() {
-		return count;
-	}
-	
-	public void incrementSize(){
-		count++;
+	// RETORNAR SE LISTA RUA ESTA VAZIA
+	public boolean isEmptyStreet() {
+		if(countStreet == 0)
+			return true;
+		return false;
 	}
 
+	// RETORNAR TAMANHO LISTA DATA
+	@Override
+	public int size() {
+		return countDate;
+	}
+	
+	// RETORNAR TAMANHO LISTA RUA
+	public int sizeStreet() {
+		return countStreet;
+	}
+
+	// VERIFICA SE ELEMENTO EXISTE LISTA DATA
 	@Override
 	public boolean contains(E e) {
 		if(isEmpty())
@@ -366,44 +257,133 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 		}
 		return false;
 	}
+	
+	// VERIFICA SE ELEMENTO EXISTE LISTA RUA
+		public boolean containsStreet(E e) {
+			if(isEmptyStreet())
+				throw new IndexOutOfBoundsException("Lista vazia!");
+					
+			Node<E> aux = headStreet;
+			// VARRE A LISTA EM BUSCA DO ELEMENTO PASSADO RETORNA TRUE SE ENCONTRADO SENÃO FALSE
+			while(aux != null){
+				if(aux.element.equals(e)){
+					return true;
+				}
+				aux = aux.nextStreet;
+			}
+			return false;
+		}
 
+	// ESVAZIA AS DUAS LISTAS
 	@Override
 	public void clear() {
 		headDate = null;
 		tailDate = null;
 		headStreet = null;
 		tailStreet = null;
-		count = 0;
+		countDate = 0;
+		countStreet = 0;
+
+	}
+	
+	// REMOVE POR DATA
+	@Override
+	public E remove(int index) {
+		if(isEmpty())
+			throw new IndexOutOfBoundsException("Lista vazia!");
+		if(index > countDate || index < 0)
+			throw new IndexOutOfBoundsException("Indice inexistente");
+		Node<E> aux = headDate;
+		
+		// REMOVE O APONTAMENTO DO NODO ANTERIOR E DO PROXIMO PARA O NODO AUXILIAR NO INDICE INDICADO
+		int i = 1;
+		while(aux != null){
+			if(i == index){
+				if(aux == tailDate){
+					tailDate = aux.prevDate;
+				}
+				aux.prevDate.nextDate = aux.nextDate;
+				aux.nextDate.prevDate = aux.prevDate;
+				countDate--;
+				return aux.element;
+			}
+			i++;
+			aux = aux.nextDate;
+		}
+		
+		return null;
+	}
+	
+	// REMOVE POR RUA
+	public E removeStreet(int index) {
+		if(isEmpty())
+			throw new IndexOutOfBoundsException("Lista vazia!");
+		if(index > countStreet || index < 0)
+			throw new IndexOutOfBoundsException("Indice inexistente");
+		Node<E> aux = headStreet;
+		
+		// REMOVE O APONTAMENTO DO NODO ANTERIOR E DO PROXIMO PARA O NODO AUXILIAR NO INDICE INDICADO
+		int i = 1;
+		while(aux != null){
+			if(i == index){
+				if(aux == tailStreet){
+					tailStreet = aux.prevStreet;
+				}
+				aux.prevStreet.nextStreet = aux.nextStreet;
+				aux.nextStreet.prevStreet = aux.prevStreet;
+				countStreet--;
+				return aux.element;
+			}
+			i++;
+			aux = aux.nextStreet;
+		}
+		
+		return null;
+	}
+
+	// ITERADOR POR DATA
+	@Override
+	public Iterator<E> iterator() {
+		return new LinkedListIteratorDate();
+	}
+	
+	// ITERADOR POR RUA
+	public Iterator<E> iteratorStreet() {
+		return new LinkedListIteratorStreet();
+	}
+	
+	
+	// #### NÃO IMPLEMENTADOS #####
+	
+	@Override
+	public void add(E e){
+		// TODO Auto-generated method stub
+	}
+
+
+	@Override
+	public void add(int index, E e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public int indexOf(E e) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean remove(E e) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
 	public String toString() {
-		if (count == 0)
-			return "[]";
-
-		Node<E> n = headDate;
-
-		StringBuffer sb = new StringBuffer();
-		sb.append("[");
-
-		for (int i = 0; i < count - 1; i++) {
-			sb.append(n.element.toString() + ",");
-			n = n.nextDate;
-		}
-		sb.append(n.element.toString());
-		sb.append("]");
-
-		return sb.toString();
+		// TODO Auto-generated method stub	
+		return null;
 	}
 
-	@Override
-	public Iterator<E> iterator() {
-		// TODO Auto-generated method stub
-		return new LinkedListIteratorDate();
-	}
 	
-	public Iterator<E> iteratorStreet() {
-		// TODO Auto-generated method stub
-		return new LinkedListIteratorStreet();
-	}
 }
