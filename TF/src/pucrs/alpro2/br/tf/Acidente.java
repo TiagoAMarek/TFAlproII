@@ -3,6 +3,7 @@ package pucrs.alpro2.br.tf;
 import java.util.Date;
 
 public class Acidente {
+	private String tipoLocal;
 	private String local;
 	private String tipoAcid;
 	private Date dataHora;
@@ -27,7 +28,7 @@ public class Acidente {
 			String diaSem, int feridos, int mortes, int mortesPost, int fatais,
 			int auto, int taxi, int lotacao, int onibusUrb, int onibusInt,
 			int caminhao, int carroca, int bicicleta, String tempo,
-			String noiteDia, String regiao) {
+			String noiteDia, String regiao, String tipoLocal) {
 		super();
 		this.local = local;
 		this.tipoAcid = tipoAcid;
@@ -48,6 +49,7 @@ public class Acidente {
 		this.tempo = tempo;
 		this.noiteDia = noiteDia;
 		this.regiao = regiao;
+		this.tipoLocal = tipoLocal;
 	}
 
 	public String getLocal() {
@@ -200,6 +202,14 @@ public class Acidente {
 
 	public void setRegiao(String regiao) {
 		this.regiao = regiao;
+	}
+
+	public String getTipoLocal() {
+		return tipoLocal;
+	}
+
+	public void setTipoLocal(String tipoLocal) {
+		this.tipoLocal = tipoLocal;
 	}
 	
 	

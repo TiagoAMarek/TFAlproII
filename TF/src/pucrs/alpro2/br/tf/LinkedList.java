@@ -2,6 +2,7 @@ package pucrs.alpro2.br.tf;
 
 import java.util.Iterator;
 
+
 @SuppressWarnings("hiding")
 public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 
@@ -28,21 +29,15 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 		}
 	}
 	
-    public class LinkedListIterator implements Iterator<E> {
+    public class LinkedListIteratorDate implements Iterator<E> {
     	 
         private Node<E> correnteDate = headDate.nextDate;
-        private Node<E> correnteStreet = headStreet.nextStreet;
-
  
         @Override
         public boolean hasNext() {
             return correnteDate != tailDate;
         }
-        
-        public boolean hasNextStreet() {
-            return correnteStreet != tailStreet;
-        }
-        
+                
         @Override
         public E next() {
         	E valor = null;
@@ -51,13 +46,28 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
             return valor;
         }
         
-        public E nextStreet() {
-        	E valor = null;
-        	valor = correnteStreet.element;
-        	correnteStreet = correnteStreet.nextStreet;
-            return valor;
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
         }
  
+    }
+
+    public class LinkedListIteratorStreet implements Iterator<E> {
+
+	    private Node<E> correnteStreet = headStreet.nextStreet;
+	
+	    public boolean hasNext() {
+	        return correnteStreet != tailStreet;
+	    }
+	
+	    public E next() {
+	    	E valor = null;
+	    	valor = correnteStreet.element;
+	    	correnteStreet = correnteStreet.nextStreet;
+	        return valor;
+	    }
+	    
         @Override
         public void remove() {
             throw new UnsupportedOperationException();
@@ -73,10 +83,14 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
   @Override
 	public void add(E e){
 		Node<E> newNode = new Node<>(e);
-
+		
 		if(count == 0){
 			// lista vazia
-			headDate = newNode;
+			headDate   = newNode;
+			tailDate   = newNode;
+			
+			headDate.nextDate = newNode;
+			tailDate.prevDate = newNode;
 		}else{
 			// lista com ao menos um elemento
 			newNode.nextDate = headDate;
@@ -90,6 +104,10 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 		if(count == 0){
 			// lista vazia
 			headStreet = newNode;
+			tailStreet = newNode;
+			
+			headStreet.nextStreet = newNode;
+			tailStreet.prevStreet = newNode;
 		}else{
 			// lista com ao menos um elemento
 			newNode.nextStreet = headStreet;
@@ -100,6 +118,48 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 		tailStreet = newNode;
 		
 		count++;
+	}
+  
+	public void addDate(E e){
+		Node<E> newNode = new Node<>(e);
+		
+		if(count == 0){
+			// lista vazia
+			headDate   = newNode;
+			tailDate   = newNode;
+			
+			headDate.nextDate = newNode;
+			tailDate.prevDate = newNode;
+		}else{
+			// lista com ao menos um elemento
+			newNode.nextDate = headDate;
+			headDate.prevDate = newNode;
+			tailDate.nextDate = newNode;
+			newNode.prevDate = tailDate;
+		}
+		
+		tailDate = newNode;
+	}
+	
+	public void addStreet(E e){
+		Node<E> newNode = new Node<>(e);
+		
+		if(count == 0){
+			// lista vazia
+			headStreet = newNode;
+			tailStreet = newNode;
+			
+			headStreet.nextStreet = newNode;
+			tailStreet.prevStreet = newNode;
+		}else{
+			// lista com ao menos um elemento
+			newNode.nextStreet      = headStreet;
+			headStreet.prevStreet   = newNode;
+			tailStreet.nextStreet   = newNode;
+			newNode.prevStreet      = tailStreet;
+		}
+		
+		tailStreet = newNode;
 	}
 
 	@Override
@@ -112,10 +172,18 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 		Node<E> newNode = new Node<>(e);
 		// LISTA VAZIA
 		if (indexDate == 0 && indexStreet == 0) {
-			headStreet = newNode;
 			headDate   = newNode;
-			tailStreet = newNode;
 			tailDate   = newNode;
+			
+			headDate.nextDate = newNode;
+			tailDate.prevDate = newNode;
+			
+			headStreet = newNode;
+			tailStreet = newNode;
+			
+			headStreet.nextStreet = newNode;
+			tailStreet.prevStreet = newNode;
+			
 		} else {
 		// LISTA COM MAIS DE UM ELEMENTO
 			Node<E> auxDate = headDate;
@@ -162,6 +230,25 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 				return aux.element;
 			}
 			aux = aux.nextDate;
+			i++;
+		}
+		return null;
+	}
+	
+	public E getByStreet(int index) {
+		if(isEmpty())
+			throw new IndexOutOfBoundsException("Lista vazia!");
+		if(index > count || index < 0)
+			throw new IndexOutOfBoundsException("Indice inexistente");
+		
+		Node<E> aux = headStreet;
+		int i = 0;
+		// PERCORRE A LISTA E RETORNA O ELEMENTO NO INDICE PASSADO
+		while(aux != null){
+			if(i == index){
+				return aux.element;
+			}
+			aux = aux.nextStreet;
 			i++;
 		}
 		return null;
@@ -259,6 +346,10 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 	public int size() {
 		return count;
 	}
+	
+	public void incrementSize(){
+		count++;
+	}
 
 	@Override
 	public boolean contains(E e) {
@@ -280,6 +371,8 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 	public void clear() {
 		headDate = null;
 		tailDate = null;
+		headStreet = null;
+		tailStreet = null;
 		count = 0;
 	}
 
@@ -306,7 +399,11 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 	@Override
 	public Iterator<E> iterator() {
 		// TODO Auto-generated method stub
-		return new LinkedListIterator();
+		return new LinkedListIteratorDate();
 	}
-
+	
+	public Iterator<E> iteratorStreet() {
+		// TODO Auto-generated method stub
+		return new LinkedListIteratorStreet();
+	}
 }
