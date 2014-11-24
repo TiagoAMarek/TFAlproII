@@ -20,12 +20,12 @@ public class Testes {
 			e.printStackTrace();
 		}
 
-		Acidente acidente1 = new Acidente("IPIRANGA", "ABALROAMENTO", date,
+	/*	Acidente acidente1 = new Acidente("IPIRANGA", "ABALROAMENTO", date,
 				"QUARTA-FEIRA", 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, "NUBLADO",
 				"DIA", "NORTE", "AV ");
 		Acidente acidente2 = new Acidente("BORGES DE MEDEIROS", "ABALROAMENTO",
 				date, "QUINTA-FEIRA", 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0,
-				"BOM", "DIA", "NORTE", "AV ");
+				"BOM", "DIA", "NORTE", "AV ");*/
 		
 		/*lista.add(0, 0, acidente1);
 		lista.add(1, 1, acidente2);*/

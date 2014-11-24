@@ -1,5 +1,6 @@
 package pucrs.alpro2.br.tf;
 
+import java.text.DateFormat;
 import java.util.Date;
 
 public class Acidente {
@@ -23,12 +24,19 @@ public class Acidente {
 	private String tempo;
 	private String noiteDia;
 	private String regiao;
-	
+	private Date data;
+	private Date hora;
+	public String toString(){
+		return tipoLocal + " " + local + ";" + tipoAcid + ";" + dataHora + ";" + diaSem + ";" + feridos + ";" + mortes + ";" + mortesPost + ";" + fatais + ";" + auto + ";"
+				+ taxi + ";" + lotacao + ";" + onibusUrb + ";" + onibusInt + ";" + caminhao + ";" + carroca + ";" + bicicleta + ";" + tempo + ";"
+				+ noiteDia + ";" + regiao + ";";
+	}
 	public Acidente(String local, String tipoAcid, Date dataHora,
 			String diaSem, int feridos, int mortes, int mortesPost, int fatais,
 			int auto, int taxi, int lotacao, int onibusUrb, int onibusInt,
 			int caminhao, int carroca, int bicicleta, String tempo,
-			String noiteDia, String regiao, String tipoLocal) {
+			String noiteDia, String regiao, String tipoLocal, Date data,
+			Date hora) {
 		super();
 		this.local = local;
 		this.tipoAcid = tipoAcid;
@@ -50,6 +58,24 @@ public class Acidente {
 		this.noiteDia = noiteDia;
 		this.regiao = regiao;
 		this.tipoLocal = tipoLocal;
+		this.data = data;
+		this.hora = hora;
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+
+	public Date getHora() {
+		return hora;
+	}
+
+	public void setHora(Date hora) {
+		this.hora = hora;
 	}
 
 	public String getLocal() {
@@ -212,6 +238,4 @@ public class Acidente {
 		this.tipoLocal = tipoLocal;
 	}
 	
-	
-
 }

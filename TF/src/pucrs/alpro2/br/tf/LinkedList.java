@@ -384,6 +384,4 @@ public class LinkedList<E> implements ListTAD<E>, Iterable<E> {
 		// TODO Auto-generated method stub	
 		return null;
 	}
-
-	
 }
